@@ -1,1 +1,16 @@
 26062023	15:36:46	b28fedfa-b7ec-4d1e-8f63-9fe6b81b7afb	POST	/account/addacoount	undefined
+26062023	18:05:43	ee063b7b-0612-4dff-813f-f2a251f87499	GET	/account/list	undefined
+26062023	18:06:01	a7041c62-9336-4dc8-8c02-ed16bf9a5689	GET	/account/list	undefined
+26062023	18:06:22	2b0f3160-6d01-453e-818f-62d3306a2819	GET	/account/list	undefined
+26062023	18:06:32	74240fdc-3835-4f43-8b15-50dcee302437	GET	/user/list	undefined
+26062023	18:12:29	b1c78114-57e6-4624-8d08-0a19a4b078ff	GET	/user/list	undefined
+26062023	18:12:32	76a7af14-8d7a-4e31-a3a2-1bc57998d70a	GET	/user/list	undefined
+26062023	18:12:44	cb848e93-ad34-4f14-a0e2-c11415d5d741	GET	/user/list	undefined
+26062023	18:13:07	639afe63-2593-40ce-9368-caff8f3e74e7	GET	/user/list	undefined
+26062023	18:13:41	11644857-3c2a-42f7-97ef-e4811bf05e38	GET	/user/list	undefined
+26062023	18:13:50	874ec7c7-f874-4ede-9fe3-a5a6a6951542	GET	/user/list	undefined
+26062023	18:14:02	2190c916-a4e8-49e5-bdbe-964e055548f3	POST	/account/addaccount	undefined
+26062023	18:14:15	443a5efe-be3c-46c7-8961-011cc573d6d8	POST	/user/add	undefined
+26062023	18:14:40	a5a5833a-8222-4656-8dc1-45149ea25493	GET	/user/list	undefined
+26062023	18:15:03	ea156c43-a7a8-487f-bd27-3a965869a87a	DELETE	/user/delete/4733	undefined
+26062023	18:15:11	01524c81-f740-4112-ad94-6ee790a83a14	GET	/user/list	undefined
