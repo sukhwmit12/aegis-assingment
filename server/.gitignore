@@ -24,3 +24,4 @@ yarn-error.log*
 /demmy
 /log
 /routes/authRoutes.js
+/sd.js

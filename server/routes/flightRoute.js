@@ -16,15 +16,22 @@ flightRoute.get("/flight/list", (req, res) => {
 });
 
 // // GET all flights /flight/list
-// flightRoute.get("/flight/:id", (req, res) => {
-//   const flight = getData();
-
-//   if (flight?.length) {
-//     return res.status(400).json({ message: "No flights found" });
-//   }
-//   res.json(findVlaue())
-//   res.send(flight);
-// });
+flightRoute.get("/flight", (req, res, next) => {
+  const flight = getValue();
+  const filters = req.query;
+  const filteredFlight = data.filter((user) => {
+    let isValid = true;
+    for (key in filters) {
+      console.log(key, flight[key], filters[key]);
+      isValid = isValid && flight[key] == filters[key];
+    }
+    return isValid;
+  });
+  if (filteredFlight?.length) {
+    return res.status(400).json({ message: "No flights found" });
+  }
+  res.send(filteredFlight);
+});
 
 // ADD a new flight
 flightRoute.post("/flight/add", (req, res) => {
