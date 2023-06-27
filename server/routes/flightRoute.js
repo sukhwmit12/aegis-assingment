@@ -1,43 +1,64 @@
 const express = require("express");
 const flightRoute = express.Router();
 const fs = require("fs");
-const { saveData, getData, findValue } = require("../middleware/utils");
 
-const dataPath = "./data/flight.json"; // path to our JSON file
+const verifyJWT = require('../middleware/verifyJWT') 
+flightRoute.use(verifyJWT)
+
+const { saveData, getData, findValue } = require("../data/utils");
+
+function findFlights(dataFlights, query) {
+  const dateFlights = findValue(
+    dataFlights,
+    "journeyDate",
+    query["journeyDate"]
+  );
+  const sourceFlight = findValue(
+    dateFlights,
+    "departureAirport",
+    query["departureAirport"]
+  );
+  const destinationFlight = findValue(
+    sourceFlight,
+    "arrivalAirport",
+    query["arrivalAirport"]
+  );
+  return destinationFlight;
+}
 
 // GET all flights /flight/list
 flightRoute.get("/flight/list", (req, res) => {
-  const flight = getData();
+  const flight = getData("flight");
 
-  if (flight?.length) {
+  if (!flight?.length) {
     return res.status(400).json({ message: "No flights found" });
   }
   res.send(flight);
 });
 
-// // GET all flights /flight/list
-flightRoute.get("/flight", (req, res, next) => {
-  const flight = getValue();
-  const filters = req.query;
-  const filteredFlight = data.filter((user) => {
-    let isValid = true;
-    for (key in filters) {
-      console.log(key, flight[key], filters[key]);
-      isValid = isValid && flight[key] == filters[key];
-    }
-    return isValid;
-  });
-  if (filteredFlight?.length) {
+// GET flights with query
+flightRoute.get("/flight/find", (req, res, next) => {
+  const dataFlights = getData("flight");
+  const arrayResultFLights = {};
+
+  const destinationFlight = findFlights(dataFlights, req.query);
+
+  console.log(destinationFlight);
+  for (const element of destinationFlight) {
+    arrayResultFLights[element["flightName"]] = element["price"];
+  }
+  console.log(arrayResultFLights);
+  if (arrayResultFLights?.length) {
     return res.status(400).json({ message: "No flights found" });
   }
-  res.send(filteredFlight);
+  res.send(arrayResultFLights);
 });
 
 // ADD a new flight
 flightRoute.post("/flight/add", (req, res) => {
-  let existFlight = getData();
+  let existFlight = getData("flight");
   try {
-    const newFlightId = Math.floor(1000 + Math.random() * 9000);
+    const newFlightId = Math.floor(10000 + Math.random() * 90000);
 
     const { flightName, journeyDate, departureAirport, arrivalAirport, price } =
       req.body;
@@ -52,54 +73,30 @@ flightRoute.post("/flight/add", (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    existFlight[newFlightId] = req.body;
+    const flightObject = {
+      id: newFlightId,
+      flightName,
+      journeyDate,
+      departureAirport,
+      arrivalAirport,
+      price,
+    };
+
+    existFlight[existFlight.length] = flightObject;
 
     console.log(existFlight);
-    saveData(existFlight);
-    res.send({ success: "ok", msg: "flight added successfully" });
+
+    saveData(existFlight, "flight");
+    res.send({
+      success: "ok",
+      msg: "flight added successfully",
+    });
   } catch (err) {
-    res.json({ status: "error", error: err });
+    res.json({
+      status: "error",
+      error: err,
+    });
   }
-});
-
-// Update flight not being used atm
-flightRoute.put("/flight/:id", (req, res) => {
-  let existFlight = getData();
-  fs.readFile(
-    dataPath,
-    "utf8",
-    (err, data) => {
-      const accountId = req.params["id"];
-      try {
-        existFlight[accountId] = req.body;
-        saveData(existFlight);
-        res.send(`flight with id ${accountId} has been updated`);
-      } catch (err) {
-        console.log("Error while updating flight details: ", err);
-      }
-    },
-    true
-  );
-});
-
-// delete flight details
-flightRoute.delete("/flight/delete/:id", (req, res) => {
-  fs.readFile(
-    dataPath,
-    "utf8",
-    (err, data) => {
-      let existFlight = getData();
-      const flightId = req.params["id"];
-      try {
-        delete existFlight[flightId];
-        saveData(existFlight);
-        res.send(`flight with id ${flightId} has been deleted`);
-      } catch (err) {
-        console.log("Error while deleting user: ", err);
-      }
-    },
-    true
-  );
 });
 
 module.exports = flightRoute;

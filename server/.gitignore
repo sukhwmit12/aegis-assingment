@@ -22,6 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /demmy
-/log
-/routes/authRoutes.js
+/logs
 /sd.js
+.env
+# /data/data.json

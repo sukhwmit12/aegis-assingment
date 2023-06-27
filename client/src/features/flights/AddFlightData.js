@@ -14,7 +14,7 @@ const AddFlightData = () => {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:3001/flight/add", {
+    const response = await fetch("http://localhost:3500/flight/add", {
       method: "POST",
       header: {
         "Content-Type": "application/json",

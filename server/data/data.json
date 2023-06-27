@@ -1,0 +1,52 @@
+{
+  "flight": [
+    {
+      "id": 12234,
+      "flightName": "indigo",
+      "journeyDate": "13june2023",
+      "departureAirport": "delhi",
+      "arrivalAirport": "hyderabad",
+      "price": "1,234"
+    },
+    {
+      "id": 12345,
+      "flightName": "vistara",
+      "journeyDate": "13june2023",
+      "departureAirport": "mumbai",
+      "arrivalAirport": "hyderabad",
+      "price": "2,234"
+    },
+    {
+      "id": 2234,
+      "flightName": "vistara",
+      "journeyDate": "13june2023",
+      "departureAirport": "delhi",
+      "arrivalAirport": "hyderabad",
+      "price": "1,254"
+    },
+    {
+      "id": 15534,
+      "flightName": "in",
+      "journeyDate": "14june2023",
+      "departureAirport": "mumbai",
+      "arrivalAirport": "hyderabad",
+      "price": "2,534"
+    },
+    {
+      "id": 73208,
+      "flightName": "airAsia",
+      "journeyDate": "14june2023",
+      "departureAirport": "mumbai",
+      "arrivalAirport": "delhi",
+      "price": "2,354"
+    }
+  ],
+  "user": [
+    {
+      "id": 1310,
+      "username": "admin",
+      "email": "admin@gmail.com",
+      "password": "$2b$10$257ePIuOxvR2UZbfmPxnMOvVIWaNcBE.OEkgMMKNvkWR/GC0FNDh."
+    }
+  ]
+}

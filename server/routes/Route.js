@@ -1,13 +1,15 @@
 const express = require("express")
 const router = express.Router();
+
 const fs = require('fs');
 
+const authRoute = require('./authRoutes.js') 
+router.use(authRoute)
 
 const userRoute = require('./userRoute.js') 
-const flightRoute = require('./flightRoute.js')
-const authRoute = require('./authRoutes.js') 
 router.use(userRoute)
+
+const flightRoute = require('./flightRoute.js')
 router.use(flightRoute)
-router.use(authRoute)
 
 module.exports = router;

@@ -24,3 +24,4 @@ yarn-error.log*
 public/index copy.html
 App copy.css
 not_to_use
+/api
