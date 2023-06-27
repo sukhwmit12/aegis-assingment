@@ -1,3 +1,0 @@
-26062023	15:33:44	c9f00641-423e-402d-99aa-5548d658b7b9	Error: ENOENT: no such file or directory, open '../data/users.json'	GET	/account	undefined
-26062023	15:34:25	70d8553f-68da-4e23-b132-ded12e2acc66	Error: ENOENT: no such file or directory, open '../data/users.json'	GET	/account/list	undefined
-26062023	18:13:07	21053ce2-bfb2-46cb-8eec-5c4d26edfc21	Error: ENOENT: no such file or directory, open './data/users.json'	GET	/user/list	undefined
