@@ -17,7 +17,6 @@ const NewUserForm = () => {
           JSON.stringify({ username, email, password }),
           {
             headers: { "Content-Type": "application/json" },
-            // withCredentials: true,
           }
         )
         .then((response) => {
@@ -28,20 +27,13 @@ const NewUserForm = () => {
         });
 
       console.log(response?.data);
-      console.log(response?.accessToken);
-      console.log(JSON.stringify(response));
 
       setUsername("");
       setEmail("");
       setPassword("");
+      alert("user added successfully");
     } catch (err) {
-      if (!err?.response) {
-        alert("No Server Response");
-      } else if (err.response?.status === 409) {
-        alert("Username Taken");
-      } else {
-        alert("Registration Failed");
-      }
+      alert(err);
     }
   }
 

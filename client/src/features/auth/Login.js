@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-// import FindFlight from "../flights/FindFlight";
 import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 
@@ -26,23 +25,17 @@ const Login = () => {
           }
         )
         .then((response) => {
-          console.log(response.data["accessToken"]);
-          cookies.set("token", response.data["accessToken"], { maxAge: 1*60 });
+          cookies.set("token", response.data["accessToken"], {
+            maxAge: 15 * 60,
+          });
           navigate("/flight");
+          console.log(response.data);
         })
         .catch((error) => {
-          return error;
+          alert(error);
         });
     } catch (err) {
-      if (!err.status) {
-        alert("No Server Response");
-      } else if (err.status === 400) {
-        alert("Missing Username or Password");
-      } else if (err.status === 401) {
-        alert("Unauthorized");
-      } else {
-        alert(err.data?.message);
-      }
+      alert(err);
     }
   }
 

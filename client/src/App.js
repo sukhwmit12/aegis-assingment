@@ -1,4 +1,3 @@
-// import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./features/auth/Login";
@@ -9,7 +8,7 @@ import NewUserForm from "./features/users/NewUserForm";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
@@ -18,7 +17,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 

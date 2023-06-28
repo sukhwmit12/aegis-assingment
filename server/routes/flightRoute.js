@@ -1,6 +1,5 @@
 const express = require("express");
 const flightRoute = express.Router();
-const fs = require("fs");
 
 const verifyJWT = require("../middleware/verifyJWT");
 flightRoute.use(verifyJWT);
@@ -37,7 +36,7 @@ flightRoute.get("/flight/list", (req, res) => {
     res.send(flight);
   } catch (err) {
     res.status(501).json({
-      error: err,
+      error: err
     });
   }
 });
@@ -60,7 +59,7 @@ flightRoute.get("/flight/find", (req, res, next) => {
     res.send(arrayResultFLights);
   } catch (err) {
     res.status(501).json({
-      error: err,
+      error: err
     });
   }
 });

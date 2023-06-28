@@ -1,6 +1,6 @@
 const express = require("express");
 const loginRoute = express.Router();
-const { saveData, getData, findValue } = require("../data/utils");
+const { getData, findValue } = require("../data/utils");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -34,13 +34,13 @@ loginRoute.post("/auth/login", async (req, res) => {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1m" }
+    { expiresIn: "15m" }
   );
 
   const refreshToken = jwt.sign(
     { username: currentUser.username },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "3m" }
+    { expiresIn: "15m" }
   );
 
   // Create secure cookie with refresh token
@@ -48,56 +48,11 @@ loginRoute.post("/auth/login", async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
-    maxAge: 2 * 24 * 60 * 60 * 1000,
+    maxAge: 15 * 60 * 1000,
   });
 
   // Send accessToken containing username
   res.json({ accessToken });
-});
-
-// GET refresh for users
-loginRoute.get("/auth/refresh", (req, res) => {
-  
-  const cookies = req.cookies;
-  
-  const existUser = getData("user");
-
-  if (!cookies?.jwt)
-    return res.status(401).json({ message: "Unauthorized" });
-
-  const refreshToken = cookies.jwt;
-
-  jwt.verify(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET,
-    async (err, decoded) => {
-      if (err) return res.status(403).json({ message: "Forbidden" });
-
-      const foundUser = findValue(
-        existUser,
-        "username",
-        (username = decoded.username)
-      );
-
-      if (!foundUser)
-        return res.status(401).json({ message: "Unauthorized" });
-
-      const currentUser = foundUser[0];
-
-      const accessToken = jwt.sign(
-        {
-          UserInfo: {
-            username: currentUser.username,
-            email: currentUser.email,
-          },
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "1m" }
-      );
-
-      res.json({ accessToken });
-    }
-  );
 });
 
 // POST logout for the users

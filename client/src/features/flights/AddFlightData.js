@@ -20,27 +20,25 @@ const AddFlightData = () => {
       const response = await axios
         .post(
           "http://localhost:3500/flight/add",
-          JSON.stringify(
-            {
-              flightName,
-              journeyDate,
-              departureAirport,
-              arrivalAirport,
-              price,
+          {
+            flightName,
+            journeyDate,
+            departureAirport,
+            arrivalAirport,
+            price,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          }
         )
         .then((response) => {
-          console.log(response);
+          return response;
         })
         .catch((error) => {
-          console.log(error);
+          alert(error);
         });
       const data = await response;
       console.log(data);
@@ -105,7 +103,6 @@ const AddFlightData = () => {
   );
 
   return content;
-  // const { flightName, journeyDate, departureAirport, arrivalAirport, price }
 };
 
 export default AddFlightData;
