@@ -57,6 +57,7 @@ loginRoute.post("/auth/login", async (req, res) => {
 
 // GET refresh for users
 loginRoute.get("/auth/refresh", (req, res) => {
+  
   const cookies = req.cookies;
   
   const existUser = getData("user");
@@ -100,6 +101,7 @@ loginRoute.get("/auth/refresh", (req, res) => {
 });
 
 // POST logout for the users
+// not used by frontend
 loginRoute.post("/auth/logout", (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204); //No content

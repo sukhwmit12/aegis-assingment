@@ -6,20 +6,31 @@ const { saveData, getData, findValue } = require("../data/utils");
 const bcrypt = require("bcrypt");
 
 // GET all user /user/list
+//not to be used by the frontend
 userRoute.get("/user/list", (req, res) => {
-  const user = getData("user");
-  console.log(user);
+  try {
+    const user = getData("user");
 
-  if (!user?.length) {
-    return res.status(400).json({ message: "No users found" });
+    for(let item of user){
+      delete user[item.password]
+    }
+
+    if (!user?.length) {
+      return res.status(200).json({ message: "No users found" });
+    }
+    res.send(user);
+  } catch (err) {
+    res.status(501).json({
+      error: err,
+    });
   }
-  res.send(user);
 });
 
 // add new user with unique email and username
 userRoute.post("/user/add", async (req, res) => {
-  let existUser = getData("user");
   try {
+    let existUser = getData("user");
+
     const { username, email, password } = req.body;
     //confirm data
     if (!username || !email || !password) {
@@ -48,9 +59,9 @@ userRoute.post("/user/add", async (req, res) => {
       message: "user added successfully",
     });
   } catch (err) {
-    res.json({ 
-      status: "error", 
-      error: err });
+    res.status(501).json({
+      error: err,
+    });
   }
 });
 

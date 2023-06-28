@@ -2,59 +2,71 @@ const express = require("express");
 const flightRoute = express.Router();
 const fs = require("fs");
 
-const verifyJWT = require('../middleware/verifyJWT') 
-flightRoute.use(verifyJWT)
+const verifyJWT = require("../middleware/verifyJWT");
+flightRoute.use(verifyJWT);
 
 const { saveData, getData, findValue } = require("../data/utils");
 
-function findFlights(dataFlights, query) {
+function findFlights(dataFlights, res) {
   const dateFlights = findValue(
     dataFlights,
     "journeyDate",
-    query["journeyDate"]
+    res.query["journeyDate"]
   );
   const sourceFlight = findValue(
     dateFlights,
     "departureAirport",
-    query["departureAirport"]
+    res.query["departureAirport"]
   );
   const destinationFlight = findValue(
     sourceFlight,
     "arrivalAirport",
-    query["arrivalAirport"]
+    res.query["arrivalAirport"]
   );
   return destinationFlight;
 }
 
 // GET all flights /flight/list
 flightRoute.get("/flight/list", (req, res) => {
-  const flight = getData("flight");
+  try {
+    const flight = getData("flight");
 
-  if (!flight?.length) {
-    return res.status(400).json({ message: "No flights found" });
+    if (!flight?.length) {
+      return res.status(200).json({ message: "No flights found" });
+    }
+    res.send(flight);
+  } catch (err) {
+    res.status(501).json({
+      error: err,
+    });
   }
-  res.send(flight);
 });
 
-// GET flights with query
+// GET flights with res.query
 flightRoute.get("/flight/find", (req, res, next) => {
-  const dataFlights = getData("flight");
-  const arrayResultFLights = {};
+  try {
+    const dataFlights = getData("flight");
 
-  const destinationFlight = findFlights(dataFlights, req.query);
+    const arrayResultFLights = {};
 
-  console.log(destinationFlight);
-  for (const element of destinationFlight) {
-    arrayResultFLights[element["flightName"]] = element["price"];
+    const destinationFlight = findFlights(dataFlights, req);
+
+    for (const element of destinationFlight) {
+      arrayResultFLights[element["flightName"]] = element["price"];
+    }
+    if (arrayResultFLights?.length) {
+      return res.status(200).json({ message: "No flights found" });
+    }
+    res.send(arrayResultFLights);
+  } catch (err) {
+    res.status(501).json({
+      error: err,
+    });
   }
-  console.log(arrayResultFLights);
-  if (arrayResultFLights?.length) {
-    return res.status(400).json({ message: "No flights found" });
-  }
-  res.send(arrayResultFLights);
 });
 
 // ADD a new flight
+// not to be used by frontend
 flightRoute.post("/flight/add", (req, res) => {
   let existFlight = getData("flight");
   try {
@@ -83,8 +95,6 @@ flightRoute.post("/flight/add", (req, res) => {
     };
 
     existFlight[existFlight.length] = flightObject;
-
-    console.log(existFlight);
 
     saveData(existFlight, "flight");
     res.send({

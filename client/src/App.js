@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./features/auth/Login";
-import AddFlightData from "./features/flights/AddFlightData";
 import FindFlight from "./features/flights/FindFlight";
 import ErrorPage from "./components/ErrorPage";
+import NewUserForm from "./features/users/NewUserForm";
+
 
 function App() {
   return (
@@ -12,12 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
-          <Route path="passengers"></Route>
-          <Route index element={<Login />} />
-          <Route path="flight">
-            <Route index element={<FindFlight />} />
-          </Route>
-          <Route path="new" element={<AddFlightData />} />
+          <Route path="signup" element={<NewUserForm />} />
+          <Route path="flight" element={<FindFlight />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

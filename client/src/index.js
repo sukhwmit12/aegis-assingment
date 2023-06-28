@@ -1,7 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
+import AddFlightData from "./features/flights/AddFlightData";
 import App from "./App";
 
 ReactDOM.render(
@@ -9,6 +10,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<App />} />
+        <Route path="new" element={<AddFlightData />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

@@ -1,35 +1,52 @@
 import { useState } from "react";
-import { format } from "date-fns";
+import axios from "axios";
+import { Cookies } from "react-cookie";
+const cookies = new Cookies();
 
 const AddFlightData = () => {
-  const inte = Math.floor(1000 + Math.random() * 9000);
-  const datetime = format(new Date(), "dd MMM, YYY pp");
+  const defaultPrice = Math.floor(1000 + Math.random() * 9000);
 
   const [flightName, setFlightName] = useState("");
-  const [journeyDate, setFJourneyDate] = useState("");
+  const [journeyDate, setJourneyDate] = useState("");
   const [departureAirport, setDepartureAirport] = useState("");
   const [arrivalAirport, setArrivalAirport] = useState("");
-  const [price, setPrice] = useState(`${inte}`);
+  const [price, setPrice] = useState(`${defaultPrice}`);
+
+  const token = cookies.get("token");
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    const response = await fetch("http://localhost:3500/flight/add", {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        flightName,
-        journeyDate,
-        departureAirport,
-        arrivalAirport,
-        price,
-      }),
-    });
-
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await axios
+        .post(
+          "http://localhost:3500/flight/add",
+          JSON.stringify(
+            {
+              flightName,
+              journeyDate,
+              departureAirport,
+              arrivalAirport,
+              price,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      const data = await response;
+      console.log(data);
+    } catch (err) {
+      alert(err);
+    }
   }
 
   const content = (
@@ -37,52 +54,58 @@ const AddFlightData = () => {
       <div className="new_flight_data">
         <h2> Add New FLight Details</h2>
         <form onSubmit={handleSubmit}>
+          <label for="source">Name:</label>
+          <br />
           <input
             value={flightName}
-            onChange={(e) => setFlightName(e.target.value)}
+            onChange={(e) => setFlightName(e.target.value.toLowerCase())}
             type="text"
             placeholder="indigo, vistara etc"
           />
           <br />
+          <label for="source">Date:</label>
+          <br />
           <input
             value={journeyDate}
-            onChange={(e) => setFJourneyDate(e.target.value)}
+            onChange={(e) => setJourneyDate(e.target.value)}
             type="date"
           />
           <br />
+          <label for="source">Source:</label>
+          <br />
           <input
             value={departureAirport}
-            onChange={(e) => setDepartureAirport(e.target.value)}
+            onChange={(e) => setDepartureAirport(e.target.value.toLowerCase())}
             type="text"
             placeholder="Delhi"
           />
           <br />
+          <label for="source">Destination:</label>
+          <br />
           <input
             value={arrivalAirport}
-            onChange={(e) => setArrivalAirport(e.target.value)}
+            onChange={(e) => setArrivalAirport(e.target.value.toLowerCase())}
             type="text"
             placeholder="Hyderabad"
           />
+          <br />
+          <label for="source">Price:</label>
           <br />
           <input
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             type="number"
-            placeholder={inte}
+            placeholder={defaultPrice}
           />
           <br />
           <input type="submit" value="Add Flight" />
         </form>
       </div>
-      <div className="diplay_end">
-        <p>{datetime}</p>
-      </div>
     </>
   );
 
-
-  return content
+  return content;
   // const { flightName, journeyDate, departureAirport, arrivalAirport, price }
 };
 
-export default AddFlightData
+export default AddFlightData;
