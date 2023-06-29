@@ -59,15 +59,18 @@ const FindFlight = () => {
   );
 
   if (!cookies.get("token")) {
-    return <Link to="/"> Go to login! </Link>;
+    return (
+      <center>
+        <Link to="/"> Go to login! </Link>
+      </center>
+    );
   }
 
   return (
-    <>
-      <h2>Find flights</h2>
+    <div className="form findflight">
       <form inline onSubmit={handleSearch}>
-        <label for="source">Where from:</label>
-        <br />
+        <h2>Find flights</h2>
+        <label>Where from:</label>
         <select
           value={departureAirport}
           onChange={(e) => setDepartureAirport(e.target.value.toLowerCase())}
@@ -77,12 +80,9 @@ const FindFlight = () => {
           <option value="mumbai">Mumbai</option>
           <option value="chennai">Chennai</option>
         </select>
-        <br />
-        <label for="source">Where to:</label>
-        <br />
+        <label>Where to:</label>
         <select
           value={arrivalAirport}
-          inline
           onChange={(e) => setArrivalAirport(e.target.value.toLowerCase())}
         >
           <option value="delhi">Delhi</option>
@@ -90,20 +90,16 @@ const FindFlight = () => {
           <option value="mumbai">Mumbai</option>
           <option value="chennai">Chennai</option>
         </select>
-        <br />
-        <label for="source">When:</label>
-        <br />
+        <label>When:</label>
         <input
           value={journeyDate}
           onChange={(e) => setJourneyDate(e.target.value)}
           type="date"
-          inline
         />
-        <br />
         <input type="submit" value="Search" />
       </form>
       {flightsFound ? displayForResult : null}
-    </>
+    </div>
   );
 };
 

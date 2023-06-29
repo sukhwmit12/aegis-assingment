@@ -38,40 +38,34 @@ const NewUserForm = () => {
   }
 
   const content = (
-    <>
-      <div className="new_flight_data">
-        <h2>Sign up!</h2>
-        <form onSubmit={handleSubmit}>
-          <label> Username: </label>
-          <br />
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            type="text"
-          />
-          <br />
-          <label> Email: </label>
-          <br />
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-          />
-          <br />
-          <label> Password: </label>
-          <br />
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
-          <br />
-          <input type="submit" value="Submit" />
-        </form>
-        <p> Already a user? </p>
-        <Link to="/"> Go to Login!</Link>
-      </div>
-    </>
+    <div className="form signup">
+      <form onSubmit={handleSubmit}>
+        <h2>Sign-Up!</h2>
+        {/* <label>Username:</label> */}
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Username"
+        />
+        {/* <label>Email:</label> */}
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          placeholder="Email"
+        />
+        {/* <label>Password:</label> */}
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          placeholder="Password"
+        />
+        <input type="submit" value="Submit" />
+      </form>
+      <Link to="/">Already a user? Go to Login!</Link>
+    </div>
   );
 
   return content;

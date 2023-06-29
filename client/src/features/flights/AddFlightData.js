@@ -48,58 +48,46 @@ const AddFlightData = () => {
   }
 
   const content = (
-    <>
-      <div className="new_flight_data">
-        <h2> Add New FLight Details</h2>
-        <form onSubmit={handleSubmit}>
-          <label for="source">Name:</label>
-          <br />
-          <input
-            value={flightName}
-            onChange={(e) => setFlightName(e.target.value.toLowerCase())}
-            type="text"
-            placeholder="indigo, vistara etc"
-          />
-          <br />
-          <label for="source">Date:</label>
-          <br />
-          <input
-            value={journeyDate}
-            onChange={(e) => setJourneyDate(e.target.value)}
-            type="date"
-          />
-          <br />
-          <label for="source">Source:</label>
-          <br />
-          <input
-            value={departureAirport}
-            onChange={(e) => setDepartureAirport(e.target.value.toLowerCase())}
-            type="text"
-            placeholder="Delhi"
-          />
-          <br />
-          <label for="source">Destination:</label>
-          <br />
-          <input
-            value={arrivalAirport}
-            onChange={(e) => setArrivalAirport(e.target.value.toLowerCase())}
-            type="text"
-            placeholder="Hyderabad"
-          />
-          <br />
-          <label for="source">Price:</label>
-          <br />
-          <input
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            type="number"
-            placeholder={defaultPrice}
-          />
-          <br />
-          <input type="submit" value="Add Flight" />
-        </form>
-      </div>
-    </>
+    <div className="form newflightdata">
+      <form onSubmit={handleSubmit}>
+        <h2>Add New FLight Details</h2>
+        <label>Flight Name:</label>
+        <input
+          value={flightName}
+          onChange={(e) => setFlightName(e.target.value.toLowerCase())}
+          type="text"
+          placeholder="indigo, vistara etc"
+        />
+        <label>Date:</label>
+        <input
+          value={journeyDate}
+          onChange={(e) => setJourneyDate(e.target.value)}
+          type="date"
+        />
+        <label>Departure Airport:</label>
+        <input
+          value={departureAirport}
+          onChange={(e) => setDepartureAirport(e.target.value.toLowerCase())}
+          type="text"
+          placeholder="Delhi"
+        />
+        <label>Arrival Airport:</label>
+        <input
+          value={arrivalAirport}
+          onChange={(e) => setArrivalAirport(e.target.value.toLowerCase())}
+          type="text"
+          placeholder="Hyderabad"
+        />
+        <label>Price:</label>
+        <input
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          type="number"
+          placeholder={defaultPrice}
+        />
+        <input type="submit" value="Add Flight" />
+      </form>
+    </div>
   );
 
   return content;

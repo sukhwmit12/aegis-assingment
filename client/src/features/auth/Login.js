@@ -40,34 +40,33 @@ const Login = () => {
   }
 
   if (cookies.get("token")) {
-    return <Link to="/flight"> Go to find flights! </Link>;
+    return (
+      <center>
+        <Link to="/flight"> Go to find flights! </Link>
+      </center>
+    );
   }
 
   return (
-    <div className="login">
-      <h2>Login</h2>
+    <div>
       <form onSubmit={loginUser}>
-        <label for="source">Username:</label>
-        <br />
+        <h2>Login</h2>
+        {/* <label>Username:</label> */}
         <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           type="text"
-          placeholder="username"
+          placeholder="Username"
         />
-        <br />
-        <label for="source">Password:</label>
-        <br />
+        {/* <label>Password:</label> */}
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="Password"
         />
-        <br />
         <input type="submit" value="Login" />
       </form>
-
       <Link to="/signup"> New Here? Signup! </Link>
     </div>
   );
